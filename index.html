@@ -1,7 +1,7 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <link rel="icon" type="image/jpeg" href="icon.png">
+    <link rel="icon" type="image/jpeg" href="icon.png" />
     <script
       src="https://kit.fontawesome.com/a14ae32021.js"
       crossorigin="anonymous"
@@ -15,7 +15,7 @@
         src: url("digital-7_mono.ttf") format("truetype");
       }
 
-      /* Full screen overlay for the big heart */
+      /* Full screen overlay for the animated heart */
       #heartScreen {
         position: fixed;
         top: 0;
@@ -29,41 +29,52 @@
         z-index: 9999;
       }
 
-      #heartScreen i {
-        font-size: 100px;
-        color: red;
-        cursor: pointer;
-        animation: heartbeat 1s infinite;
+      /* Wrapper to hold heart icon and label together */
+      .heart-wrapper {
+        position: relative;
+        text-align: center;
+        animation: heartbeat 1.2s infinite;
         transition: transform 0.3s;
       }
 
+      .heart-wrapper:hover {
+        transform: scale(1.1);
+      }
+
+      .heart-wrapper i {
+        font-size: 100px;
+        color: violet;
+      }
+
+      /* Label that appears in the center of the heart */
+      .heart-label {
+        position: absolute;
+        top: 52%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Courier New", cursive;
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+        letter-spacing: 1px;
+        pointer-events: none;
+        text-shadow: 0 0 5px #c084fc, 0 0 10px #c084fc, 0 0 15px #a855f7,
+          1px 1px 2px black;
+      }
+
       @keyframes heartbeat {
-        0% {
-          transform: scale(1);
-        }
-
-        25% {
-          transform: scale(1.2);
-        }
-
-        50% {
-          transform: scale(1);
-        }
-
-        75% {
-          transform: scale(1.2);
-        }
-
+        0%,
+        50%,
         100% {
           transform: scale(1);
         }
+        25%,
+        75% {
+          transform: scale(1.2);
+        }
       }
 
-      #heartScreen i:hover {
-        transform: scale(1.3);
-      }
-
-      /* Fade-in setup */
+      /* Fades in the main content after heart click */
       #mainWrapper {
         opacity: 0;
         transition: opacity 1.5s ease;
@@ -81,35 +92,48 @@
   </head>
 
   <body>
-    <!-- Fullscreen Heart Button -->
+    <!-- Fullscreen Heart Button with label -->
     <div id="heartScreen">
-      <i class="fas fa-heart"></i>
+      <div class="heart-wrapper">
+        <i class="fas fa-heart"></i>
+        <span class="heart-label">PRESS ME</span>
+      </div>
     </div>
 
-    <!-- Audio player -->
+    <!-- Background music that plays when heart is pressed -->
     <audio id="bgMusic" src="ybmh.mp3" preload="auto" loop></audio>
 
-    <!-- Wrap the main content for fade-in -->
+    <!-- Main romantic content hidden initially -->
     <div id="mainWrapper">
       <div id="mainDiv">
         <div id="content">
           <div id="code">
             <span class="comments">/**</span><br />
-            <span class="space"></span><span class="comments">*When Love Waits</span><br />
+            <span class="space"></span
+            ><span class="comments">*When Love Waits</span><br />
             <span class="space"></span><span class="comments">*/</span><br />
             Hey Kai!<br />
             Idk if you stil remember when this all began<br />
-            <span class="comments">// February 25, 2020, 12:58 Senior High days.</span><br />
+            <span class="comments"
+              >// February 25, 2020, 12:58 Senior High days.</span
+            ><br />
             I’ve been yearning for you ever since;<br />
-            <span class="comments">// Even when you had someone else.</span><br />
+            <span class="comments">// Even when you had someone else.</span
+            ><br />
             I tried to bury these feelings, but they only grew stronger.<br />
-            <span class="comments">// February 25, 2024, 03:37 — a night I’ll never forget.</span><br />
+            <span class="comments"
+              >// February 25, 2024, 03:37 — a night I’ll never forget.</span
+            ><br />
             You may not remember it all, but I always will.<br />
             I’ve loved you through distance, through silence, through time.<br />
-            <span class="comments">// Even when I told myself to let go.</span><br />
+            <span class="comments">// Even when I told myself to let go.</span
+            ><br />
             Still, my heart kept yearning for you.<br />
-            <span class="comments">// June 7, 2025, 13:47 — my last confession.</span><br />
-            I chose to love you, even when I thought I had no place in your heart.<br /><br />
+            <span class="comments"
+              >// June 7, 2025, 13:47 — my last confession.</span
+            ><br />
+            I chose to love you, even when I thought I had no place in your
+            heart.<br /><br />
             And now, here we are — finally giving each other a chance.<br />
             I’m glad I never gave up on you.<br />
             I will always love you, bading!
@@ -127,26 +151,26 @@
               </div>
             </div>
           </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
     <script type="text/javascript">
-      // Heart click event to fade out overlay, fade in content, and play music
+      // Handles heart click: fade out screen, show content, play music
       $("#heartScreen i").click(function () {
         $("#heartScreen").fadeOut();
         $("#mainWrapper").addClass("show");
         document.getElementById("bgMusic").play();
       });
 
-      // Your original script starts here immediately
+      // Setup initial values and calculate time since the special date
       var offsetX = $("#loveHeart").width() / 2;
       var offsetY = $("#loveHeart").height() / 2 - 55;
+
+      // Date of your first love memory: February 25, 2020, 12:58 PM
       var together = new Date(2020, 1, 25, 12, 58, 0, 0);
 
+      // Check HTML5 canvas support
       if (!document.createElement("canvas").getContext) {
         var msg = document.createElement("div");
         msg.id = "errorMsg";
@@ -154,19 +178,21 @@
           "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+";
         document.body.appendChild(msg);
         $("#code").css("display", "none");
-        $("#copyright").css("position", "absolute");
-        $("#copyright").css("bottom", "10px");
+        $("#copyright").css({ position: "absolute", bottom: "10px" });
         document.execCommand("stop");
       } else {
+        // Start heart animation after 5 seconds
         setTimeout(function () {
           startHeartAnimation();
         }, 5000);
 
+        // Begin and update the love timer
         timeElapse(together);
         setInterval(function () {
           timeElapse(together);
         }, 500);
 
+        // Adjust position of code block and trigger typewriter effect
         adjustCodePosition();
         $("#code").typewriter();
       }
